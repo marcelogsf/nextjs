@@ -1,0 +1,206 @@
+export type Vaga = {
+  id: string;
+  titulo: string;
+  empresa: string;
+  empresaSlug: string;
+  area: string;
+  senioridade: string;
+  local: string;
+  aceitaIniciante: boolean;
+  descricao: string;
+};
+
+export const vagas: Vaga[] = [
+  {
+    id: "1",
+    titulo: "Pessoa Desenvolvedora Front-end Júnior",
+    empresa: "Aurora Tech",
+    empresaSlug: "aurora-tech",
+    area: "Front-end",
+    senioridade: "Júnior",
+    local: "Remoto",
+    aceitaIniciante: true,
+    descricao:
+      "Você vai trabalhar com React e Next.js num time de produto que já " +
+      "está no ar, pareando com gente mais experiente nas primeiras semanas " +
+      "e assumindo telas inteiras depois. O dia a dia é ler o código dos " +
+      "outros, abrir pull request pequeno e conversar com quem desenha. Não " +
+      "exigimos experiência anterior em empresa: exigimos vontade de " +
+      "aprender em público e de pedir ajuda antes de travar dois dias.",
+  },
+  {
+    id: "2",
+    titulo: "Analista de Dados Júnior",
+    empresa: "Aurora Tech",
+    empresaSlug: "aurora-tech",
+    area: "Dados",
+    senioridade: "Júnior",
+    local: "Híbrido · Recife",
+    aceitaIniciante: true,
+    descricao:
+      "O time de dados cuida dos painéis que a diretoria abre toda segunda " +
+      "de manhã. Você vai escrever SQL, limpar planilha que chegou torta e " +
+      "montar visualização que responde uma pergunta de negócio por vez. " +
+      "Metade do trabalho é técnico; a outra metade é descobrir o que a " +
+      "pessoa que pediu o relatório realmente queria saber. Python é " +
+      "bem-vindo e não é obrigatório para se candidatar.",
+  },
+  {
+    id: "3",
+    titulo: "Pessoa Desenvolvedora Mobile Pleno",
+    empresa: "Nuvem Rosa",
+    empresaSlug: "nuvem-rosa",
+    area: "Mobile",
+    senioridade: "Pleno",
+    local: "Presencial · Olinda",
+    aceitaIniciante: false,
+    descricao:
+      "O aplicativo da Nuvem Rosa está nas duas lojas e tem gente usando " +
+      "todo dia, então a vaga é para quem já publicou app e sabe o que " +
+      "acontece quando uma atualização quebra na mão de quem usa. A stack " +
+      "é React Native com Expo, testes em Detox e uma esteira de release " +
+      "que você vai ajudar a arrumar. Pedimos dois anos de experiência com " +
+      "mobile porque hoje não há ninguém sênior no time para revisar.",
+  },
+  {
+    id: "4",
+    titulo: "Pessoa Desenvolvedora Back-end Júnior",
+    empresa: "NexoCore Sistemas",
+    empresaSlug: "nexocore",
+    area: "Back-end",
+    senioridade: "Júnior",
+    local: "Remoto",
+    aceitaIniciante: true,
+    descricao:
+      "Atuação no desenvolvimento de microsserviços e APIs com Node.js e TypeScript. " +
+      "Você vai integrar serviços com PostgreSQL e Redis, implementar rotinas de " +
+      "autenticação seguras e acompanhar deploys em ambiente de homologação. O time " +
+      "valoriza boas práticas de testes unitários com Jest e documentação clara com OpenAPI. " +
+      "Oferecemos mentoria semanal e suporte contínuo para transição de carreira.",
+  },
+  {
+    id: "5",
+    titulo: "Analista de QA e Automação de Testes",
+    empresa: "NexoCore Sistemas",
+    empresaSlug: "nexocore",
+    area: "QA",
+    senioridade: "Júnior",
+    local: "Remoto",
+    aceitaIniciante: true,
+    descricao:
+      "Responsável por estruturar e executar planos de testes automatizados ponta a ponta. " +
+      "Você trabalhará próximo aos desenvolvedores criando suites de teste com Playwright e " +
+      "Cypress, além de identificar e documentar bugs de forma detalhada no issue tracker. " +
+      "Buscamos alguém com olhar analítico, noções básicas de JavaScript e interesse por " +
+      "qualidade de software e integração contínua (CI/CD).",
+  },
+  {
+    id: "6",
+    titulo: "Engenheiro(a) de Dados Pleno",
+    empresa: "DataFlow Labs",
+    empresaSlug: "dataflow-labs",
+    area: "Dados",
+    senioridade: "Pleno",
+    local: "Remoto",
+    aceitaIniciante: false,
+    descricao:
+      "Construção e manutenção de pipelines de dados robustos em batch e streaming. " +
+      "A posição exige experiência prática com Python, Apache Spark, Airflow e data lakes " +
+      "na nuvem. Você será responsável por garantir a governança, integridade e disponibilidade " +
+      "dos dados analíticos para múltiplos times de produto, otimizando custos e latência de " +
+      "consultas analíticas.",
+  },
+  {
+    id: "7",
+    titulo: "UI/UX Designer Júnior",
+    empresa: "Horizonte Digital",
+    empresaSlug: "horizonte-digital",
+    area: "Design",
+    senioridade: "Júnior",
+    local: "Híbrido · São Paulo",
+    aceitaIniciante: true,
+    descricao:
+      "Criação e manutenção de componentes do nosso Design System no Figma, elaboração " +
+      "de fluxos de navegação e condução de testes de usabilidade com usuários reais. " +
+      "Você colaborará diretamente com a equipe de desenvolvimento front-end para garantir " +
+      "fidelidade visual e excelente acessibilidade web (WCAG). Não exigimos formação formal, " +
+      "mas sim um portfólio que demonstre seu processo de raciocínio de design.",
+  },
+  {
+    id: "8",
+    titulo: "Estágio em Desenvolvimento Web",
+    empresa: "Horizonte Digital",
+    empresaSlug: "horizonte-digital",
+    area: "Front-end",
+    senioridade: "Estágio",
+    local: "Híbrido · São Paulo",
+    aceitaIniciante: true,
+    descricao:
+      "Oportunidade ideal para estudantes de tecnologia que desejam dar os primeiros passos " +
+      "profissionais. Você aprenderá na prática sobre React, Next.js, Git e desenvolvimento ágil, " +
+      "auxiliando na correção de bugs e criação de novas páginas institucionais e dashboards. " +
+      "Carga horária flexível de 6 horas diárias com bolsa-auxílio compatível e programa formal " +
+      "de acompanhamento técnico.",
+  },
+  {
+    id: "9",
+    titulo: "Pessoa Desenvolvedora Back-end Pleno (Java / Spring)",
+    empresa: "Aurora Tech",
+    empresaSlug: "aurora-tech",
+    area: "Back-end",
+    senioridade: "Pleno",
+    local: "Remoto",
+    aceitaIniciante: false,
+    descricao:
+      "Evolução da arquitetura de microsserviços em Java 21 e Spring Boot 3 que suporta " +
+      "nossa plataforma de logística. Você lidará com mensageria assíncrona (RabbitMQ/Kafka), " +
+      "otimização de queries em banco relacional e observabilidade com Prometheus e Grafana. " +
+      "Buscamos alguém com sólida base em programação orientada a objetos, padrões de projeto " +
+      "e arquitetura limpa.",
+  },
+  {
+    id: "10",
+    titulo: "Desenvolvedor(a) Mobile Flutter Júnior",
+    empresa: "Nuvem Rosa",
+    empresaSlug: "nuvem-rosa",
+    area: "Mobile",
+    senioridade: "Júnior",
+    local: "Remoto",
+    aceitaIniciante: true,
+    descricao:
+      "Desenvolvimento de novas funcionalidades para aplicativos multiplataforma em Flutter e Dart. " +
+      "Você atuará no consumo de APIs REST, implementação de designs responsivos e publicação de " +
+      "versões de teste. O time valoriza código limpo, componentização modular e cobertura de testes " +
+      "de widgets. Excelente ambiente para quem está migrando para a área mobile.",
+  },
+  {
+    id: "11",
+    titulo: "Analista de Suporte Técnico & QA",
+    empresa: "DataFlow Labs",
+    empresaSlug: "dataflow-labs",
+    area: "QA",
+    senioridade: "Júnior",
+    local: "Remoto",
+    aceitaIniciante: true,
+    descricao:
+      "Ponto de contato entre clientes técnicos e time de engenharia. Você irá reproduzir " +
+      "cenários de erro, realizar testes exploratórios em novas releases da plataforma e " +
+      "documentar manuais e guias de resolução de incidentes. Uma oportunidade estratégica para " +
+      "compreender o funcionamento profundo de produtos de software antes de migrar para desenvolvimento.",
+  },
+  {
+    id: "12",
+    titulo: "Product Designer Pleno",
+    empresa: "DataFlow Labs",
+    empresaSlug: "dataflow-labs",
+    area: "Design",
+    senioridade: "Pleno",
+    local: "Remoto",
+    aceitaIniciante: false,
+    descricao:
+      "Liderança do design de ponta a ponta para ferramentas analíticas de dados e visualizações " +
+      "complexas. Você será responsável por conduzir discovery com cientistas e engenheiros de dados, " +
+      "prototipar interfaces intuitivas e estruturar métricas de engajamento do produto. Exige " +
+      "experiência prévia em produtos SaaS B2B e facilidade com arquitetura de informação.",
+  },
+];

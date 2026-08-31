@@ -1,0 +1,16 @@
+import Link from "next/link";
+import type { Vaga } from "@/data/vagas";
+
+export default function CardDeVaga({ vaga }: { vaga: Vaga }) {
+  return (
+    <li>
+      <Link href={`/vagas/${vaga.id}`}>
+        <strong>{vaga.titulo}</strong>
+        <span>
+          {vaga.empresa} · {vaga.area} · {vaga.senioridade} · {vaga.local}
+        </span>
+      </Link>
+      {vaga.aceitaIniciante && <span className="selo">aceita iniciante</span>}
+    </li>
+  );
+}
