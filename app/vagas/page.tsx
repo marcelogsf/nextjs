@@ -1,8 +1,9 @@
-import { vagas } from "@/data/vagas";
+import { listarVagas } from "@/lib/api";
 import MuralDeVagas from "@/components/MuralDeVagas";
 
-export default function Vagas() {
+export default async function Vagas() {
   console.log("[servidor] montando a listagem");
+  const vagas = await listarVagas();
 
   return (
     <>
