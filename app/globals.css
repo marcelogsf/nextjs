@@ -240,3 +240,155 @@ body {
 }
 
 @keyframes pulsa { 50% { opacity: .5; } }
+
+/* ── Home Page ─────────────────────────────────────────────── */
+.home-container { display: flex; flex-direction: column; gap: 56px; }
+
+/* Hero */
+.hero-section  { display: flex; flex-direction: column; gap: 18px; padding: 20px 0 8px; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  background: rgba(123, 79, 208, 0.12);
+  border: 1px solid rgba(123, 79, 208, 0.3);
+  border-radius: 999px;
+  font-size: 13px;
+  color: #c4b5fd;
+  width: fit-content;
+}
+.hero-title {
+  font-size: clamp(26px, 5vw, 42px);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+}
+.hero-gradient-text {
+  background: linear-gradient(90deg, #7B4FD0 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-desc   { font-size: 15px; color: #a1a1aa; line-height: 1.7; max-width: 540px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* Botões */
+.btn-primario {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  background: #7B4FD0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-primario:hover { background: #6c3fbe; transform: translateY(-1px); }
+
+.btn-secundario {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  background: transparent;
+  color: #a1a1aa;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid #3f3f46;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-secundario:hover { color: #fafafa; border-color: #7B4FD0; }
+
+/* Métricas */
+.metricas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.metrica-card {
+  background: #12111a;
+  border: 1px solid #27272a;
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+}
+.metrica-numero { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+.destaque-azul         { color: #60a5fa; }
+.destaque-azul-claro   { color: #a78bfa; }
+.destaque-azul-intenso { color: #7B4FD0; }
+.destaque-ciano        { color: #38bdf8; }
+.metrica-label { font-size: 12px; color: #71717a; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* Section headers */
+.secao-cabecalho  { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.secao-titulo     { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+.secao-subtitulo  { font-size: 13px; color: #71717a; margin-top: 3px; }
+.secao-link       { font-size: 13px; color: #7B4FD0; text-decoration: none; font-weight: 500; white-space: nowrap; transition: color 0.2s; }
+.secao-link:hover { color: #a78bfa; }
+
+/* Áreas */
+.areas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.area-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #12111a;
+  border: 1px solid #27272a;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+.area-card:hover        { border-color: #7B4FD0; }
+.area-card-info         { display: flex; align-items: center; gap: 8px; }
+.area-card-icone        { font-size: 16px; }
+.area-card-nome         { font-size: 13px; font-weight: 600; }
+.area-card-badge        { font-size: 11px; color: #71717a; background: #18181b; padding: 2px 8px; border-radius: 999px; }
+
+/* Empresas */
+.empresas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.empresa-card {
+  display: block;
+  padding: 18px;
+  background: #12111a;
+  border: 1px solid #27272a;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s;
+}
+.empresa-card:hover       { border-color: #3f3f46; }
+.empresa-card-topo        { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.empresa-card-nome        { font-size: 14px; font-weight: 700; }
+.empresa-card-vagas       { font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(123,79,208,0.12); color: #c4b5fd; border-radius: 999px; white-space: nowrap; }
+.empresa-card-desc        { font-size: 12px; color: #71717a; line-height: 1.5; }
+
+/* Diferenciais */
+.diferenciais-grid   { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.diferencial-card    { padding: 20px; background: #12111a; border: 1px solid #27272a; border-radius: 12px; }
+.diferencial-icone   { font-size: 26px; margin-bottom: 10px; }
+.diferencial-titulo  { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.diferencial-desc    { font-size: 13px; color: #71717a; line-height: 1.6; }
+
+/* CTA banner */
+.cta-banner {
+  padding: 36px 28px;
+  background: linear-gradient(135deg, rgba(123,79,208,0.12) 0%, rgba(56,189,248,0.06) 100%);
+  border: 1px solid rgba(123,79,208,0.2);
+  border-radius: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.cta-banner h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.cta-banner p  { font-size: 14px; color: #a1a1aa; max-width: 460px; }
+
