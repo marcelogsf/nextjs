@@ -1,11 +1,18 @@
 export type Vaga = {
-    id: string;
-    titulo: string;
-    empresa: string;
-    empresaSlug: string;
-    area: string;
-    senioridade: string;
-    local: string;
-    aceitaIniciante: boolean;
-    descricao: string;
+  id: string;
+  titulo: string;
+  empresa: string;
+  empresaSlug: string;
+  area: string;
+  senioridade: string;
+  local: string;
+  aceitaIniciante: boolean;
+  descricao: string;
+};
+
+export type Empresa = {
+  slug: string;
+  nome: string;
+  sobre: string;
+  site: string;
 };

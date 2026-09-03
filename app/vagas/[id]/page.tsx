@@ -1,30 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { vagas } from "@/data/vagas";
+import { listarVagas, buscarVaga } from "@/lib/api";
 import BotaoCopiarLink from "@/components/BotaoCopiarLink";
 import DescricaoDaVaga from "@/components/DescricaoDaVaga";
 import FormularioDeCandidatura from "@/components/FormularioDeCandidatura";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
+type Props = { params: Promise<{ id: string }> };
+
+export async function generateStaticParams() {
+  const vagas = await listarVagas();
+  return vagas.map((vaga) => ({ id: String(vaga.id) }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const vaga = vagas.find((v) => v.id === id);
+  const vaga = await buscarVaga(id);
+
+  if (!vaga) {
+    return { title: "Vaga não encontrada · Leque de Vagas" };
+  }
+
   return {
-    title: vaga ? `${vaga.titulo} · Leque de Vagas` : "Vaga não encontrada",
+    title: `${vaga.titulo} · ${vaga.empresa}`,
+    description: vaga.descricao.slice(0, 150),
   };
 }
 
-export default async function PaginaDaVaga({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function PaginaDaVaga({ params }: Props) {
   const { id } = await params;
-  const vaga = vagas.find((v) => v.id === id);
+  const vaga = await buscarVaga(id);
 
   if (!vaga) {
     notFound();

@@ -1,50 +1,62 @@
 # Leque de Vagas 💼
 
-Projeto desenvolvido como parte do curso **Introdução ao Next.js** (NickDev · *Um Leque de Tecnologia*), cobrindo os fundamentos, o mapa de rotas (Aula 02) e a divisão em **Quatro Frentes de Estado com Server e Client Components (Aula 03)**.
+Projeto desenvolvido como parte do curso **Introdução ao Next.js** (NickDev · *Um Leque de Tecnologia*), cobrindo os fundamentos, o mapa de rotas (Aula 02), componentes de servidor e cliente (Aula 03) e **Data Fetching, ISR, SSG e Streaming com Suspense (Aula 04)**.
 
 ---
 
-## 👥 O Estado do Projeto (Aula 03)
+## 🌐 O Dado Vem de Fora (Aula 04)
 
-O projeto foi organizado em **quatro frentes de trabalho**, onde cada frente aborda uma forma de estado (`useState`) e interatividade específica:
+Na Aula 04, os dados deixam de ficar "chumbados" no código fonte e passam a ser consumidos de fontes externas via requisições assíncronas (`fetch` em Server Components).
 
-| Frente | Responsabilidade | Forma de Estado | Componente(s) de Cliente |
-| :--- | :--- | :--- | :--- |
-| **1 · Vaga** | Contrato de dados e página de detalhe | Booleano (`true`/`false`) | `DescricaoDaVaga`, `BotaoCopiarLink` |
-| **2 · Empresa** | Cadastro institucional e listagem por empresa | Texto que escolhe (`"sobre"` / `"vagas"`) | `AbasDaEmpresa` |
-| **3 · Pessoa e Candidatura** | Formulário e registro de candidatura | Campo controlado + Lista imutável | `FormularioDeCandidatura` |
-| **4 · Busca e Números** | Filtros, busca em tempo real e métricas | Estado levantado + Estado derivado | `MuralDeVagas` |
+### 🏛️ Arquitetura das Quatro Frentes:
 
----
-
-### 🔍 Por que cada componente leva `"use client"`?
-
-A diretiva `"use client"` foi aplicada **estritamente nas folhas da árvore de componentes**, mantendo todas as páginas e layouts como Server Components puros:
-
-- **`DescricaoDaVaga`**: Possui evento de clique (`onClick`) e precisa lembrar se o texto expandido está aberto ou fechado (`useState(false)`).
-- **`BotaoCopiarLink`**: Possui evento de clique (`onClick`), memória de confirmação (`copiado`) e utiliza a API do navegador `navigator.clipboard`, que não existe no ambiente do servidor.
-- **`AbasDaEmpresa`**: Possui evento de clique (`onClick`) e precisa lembrar qual aba foi selecionada pelo usuário (`useState("sobre")`).
-- **`FormularioDeCandidatura`**: Gerencia campos controlados (`nome`, `email`, `rascunho`), lista imutável de habilidades (`habilidades`) e alternância de tela no envio (`enviada`).
-- **`MuralDeVagas`**: Centraliza o estado da busca (`busca`) e da área selecionada (`area`), passando-os para o componente filho.
-- **Nota sobre `Filtros` e `CardDeVaga`**: Nenhum dos dois leva `"use client"` diretamente. `Filtros` é importado por um Client Component (`MuralDeVagas`) e `CardDeVaga` apenas renderiza props estáticas.
-
-> **Validação de Servidor:**
-> Nenhum arquivo `page.tsx` ou `layout.tsx` possui `"use client"`. O log `[servidor] montando a listagem` é emitido diretamente no terminal do Node.js durante a execução/build.
+| Frente | Responsabilidade | Recursos da Aula 04 |
+| :--- | :--- | :--- |
+| **1 · Vaga** | Detalhes da vaga e pré-renderização | `fetch` com ISR (`revalidate: 60`), `generateStaticParams` (`id`), `generateMetadata` dinâmico |
+| **2 · Empresa** | Página da empresa e catálogo institucional | `Promise.all` em paralelo, `revalidate: 3600`, `generateStaticParams` (`slug`), `generateMetadata` |
+| **3 · Pessoa e Candidatura** | Resiliência e estados de erro | `error.tsx` com botão de recuperação (`reset()`), `notFound()`, esqueleto com `loading.tsx` |
+| **4 · Busca e Números** | Streaming e performance percebida | `<Suspense />` duplo na listagem, `NumerosDoCatalogo` assíncrono, skeletons sem *layout shift* |
 
 ---
 
-### 💡 O que decidimos NÃO guardar em estado (Estados Derivados)
+### 🔍 Por que os tempos de `revalidate` são diferentes?
+No arquivo `lib/api.ts`, isolamos a URL da fonte e estabelecemos estratégias de revalidação baseadas na natureza do dado:
+- **Vagas (`revalidate: 60`)**: Vagas são dinâmicas e entram/saem com frequência. Um cache de 1 minuto garante que novidades apareçam rápido sem sobrecarregar a fonte.
+- **Empresas (`revalidate: 3600`)**: Dados institucionais (descrição, site) mudam raramente. Um cache de 1 hora economiza banda e tempo de CPU.
 
-Seguindo a boa prática de **"se dá para calcular do que você já tem, não guarde em estado"**, evitamos redundâncias e bugs de sincronização:
+---
 
-1. **Lista filtrada (`visiveis`)**: Calculada em tempo de execução combinando a lista de `vagas`, o termo de `busca` e a `area` selecionada. Se fosse um estado separado, qualquer alteração exigiria múltiplos `set` manuais propensos a inconsistência.
-2. **Contadores numéricos**:
-   - `visiveis.length` e `aceitamIniciante` saem diretamente do array filtrado.
-   - `vagas.length` na aba da empresa sai diretamente da prop recebida.
-3. **Validação do Formulário**:
-   - `emailParece` (`email.includes("@") && email.includes(".")`) e `podeEnviar` são expressões booleanas recalculadas a cada renderização.
-4. **Visibilidade do texto truncado**:
-   - `cabeInteira` e `visivel` no `DescricaoDaVaga` são calculados diretamente a partir do tamanho do texto e do booleano `aberta`.
+## ⚙️ Saída do `npm run build`
+
+```text
+Route (app)                  Revalidate  Expire
+┌ ○ /
+├ ○ /_not-found
+├ ○ /empresas                        1h      1y
+├   /empresas/[slug]
+│ ├ ● /empresas/aurora-tech          1m      1y
+│ ├ ● /empresas/nuvem-rosa           1m      1y
+│ ├ ● /empresas/nexocore             1m      1y
+│ └ ● [+2 more paths]
+├ ○ /privacidade
+├ ○ /produtos/novo
+├ ○ /sobre
+├ ○ /termos
+├ ○ /vagas                           1m      1y
+└   /vagas/[id]
+  ├ ● /vagas/1                       1m      1y
+  ├ ● /vagas/2                       1m      1y
+  ├ ● /vagas/3                       1m      1y
+  └ ● [+9 more paths]
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+```
+
+> **Legenda Técnica:**
+> - **`○` (Static):** HTML pré-renderizado estaticamente uma única vez no build.
+> - **`●` (SSG):** HTML pré-gerado no build com base na lista retornada por `generateStaticParams` (acesso instantâneo).
+> - **`1m` / `1h` (ISR):** *Incremental Static Regeneration* — a página é revalidada em segundo plano quando o cache expira (*stale-while-revalidate*).
 
 ---
 
@@ -53,36 +65,19 @@ Seguindo a boa prática de **"se dá para calcular do que você já tem, não gu
 | Caminho do Arquivo | Rota / URL Gerada | Descrição |
 | :--- | :--- | :--- |
 | `app/page.tsx` | `/` | Página inicial do Leque de Vagas |
-| `app/not-found.tsx` | *Qualquer rota inexistente* | Tela 404 global da aplicação |
-| `app/vagas/page.tsx` | `/vagas` | Listagem geral com busca interativa e filtros |
-| `app/vagas/[id]/page.tsx` | `/vagas/[id]` (ex: `/vagas/1`) | Detalhes da vaga, cópia de link e formulário de candidatura |
-| `app/vagas/[id]/error.tsx` | `/vagas/[id]` (em caso de erro) | Tratamento de erro com botão `retry` |
-| `app/vagas/[id]/not-found.tsx` | `/vagas/9999` (id inexistente) | Tela 404 contextualizada da vaga |
-| `app/empresas/[slug]/page.tsx` | `/empresas/[slug]` (ex: `/empresas/aurora-tech`) | Página da empresa com alternância de abas |
+| `app/not-found.tsx` | *Qualquer rota inexistente* | Tela 404 global |
+| `app/vagas/page.tsx` | `/vagas` | Listagem de vagas com streaming por `<Suspense>` |
+| `app/vagas/[id]/page.tsx` | `/vagas/[id]` (ex: `/vagas/1`) | Detalhes pré-gerados com `generateStaticParams` |
+| `app/vagas/[id]/loading.tsx`| `/vagas/[id]` (durante a espera) | Esqueleto com animação de pulso |
+| `app/vagas/[id]/error.tsx` | `/vagas/[id]` (em falha de rede) | Tratamento amigável com botão para tentar novamente |
+| `app/empresas/page.tsx` | `/empresas` | Catálogo das empresas parceiras |
+| `app/empresas/[slug]/page.tsx`| `/empresas/[slug]` | Página institucional com abas e pré-geração SSG |
 | `app/(institucional)/termos/page.tsx` | `/termos` | Termos de uso (Route Group sem prefixo) |
 | `app/(institucional)/privacidade/page.tsx` | `/privacidade` | Política de privacidade (Route Group sem prefixo) |
 
 ---
 
-## ⚙️ Saída do `npm run build`
-
-```text
-Route (app)
-┌ ○ /
-├ ○ /_not-found
-├ ƒ /empresas/[slug]
-├ ○ /privacidade
-├ ○ /termos
-├ ○ /vagas
-└ ƒ /vagas/[id]
-
-○  (Static)   prerendered as static content
-ƒ  (Dynamic)  server-rendered on demand
-```
-
----
-
-## � Como Rodar o Projeto Localmente
+## 🚀 Como Rodar o Projeto Localmente
 
 1. Clone o repositório:
    ```bash
@@ -106,9 +101,9 @@ Route (app)
 
 ## 🌐 Deploy
 
-Publicado na [Vercel](https://vercel.com). Commits na branch `main` disparam o deploy automaticamente.
+Publicado na [Vercel](https://vercel.com). Commits na branch `main` disparam o deploy e a revalidação estática automaticamente.
 
 ---
 
 **Autor:** Marcelo Filho  
-*Aula 03 · Introdução ao Next.js · NickDev (Um Leque de Tecnologia)*
+*Aula 04 · Introdução ao Next.js · NickDev (Um Leque de Tecnologia)*

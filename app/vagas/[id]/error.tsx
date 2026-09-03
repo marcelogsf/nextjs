@@ -2,16 +2,18 @@
 
 export default function ErroDaVaga({
   error,
-  retry,
+  reset,
 }: {
   error: Error & { digest?: string };
-  retry: () => void;
+  reset: () => void;
 }) {
   return (
-    <div className="aviso">
-      <h2>Não consegui carregar esta vaga</h2>
-      <p>Pode ter sido instabilidade. Tente de novo.</p>
-      <button onClick={() => retry()}>Tentar de novo</button>
+    <div className="aviso erro-box">
+      <h2>Não conseguimos carregar esta vaga</h2>
+      <p>A conexão com a nossa fonte de dados falhou. Isso costuma ser momentâneo.</p>
+      <button type="button" onClick={() => reset()} style={{ marginTop: "12px" }}>
+        Tentar de novo
+      </button>
     </div>
   );
 }

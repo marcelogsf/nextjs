@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Filtros from "./Filtros";
 import CardDeVaga from "./CardDeVaga";
-import type { Vaga } from "@/data/vagas";
+import type { Vaga } from "@/lib/tipos";
 
 export default function MuralDeVagas({ vagas }: { vagas: Vaga[] }) {
   const [busca, setBusca] = useState("");
@@ -20,8 +20,6 @@ export default function MuralDeVagas({ vagas }: { vagas: Vaga[] }) {
     return bateBusca && bateArea;
   });
 
-  const aceitamIniciante = visiveis.filter((v) => v.aceitaIniciante).length;
-
   return (
     <section>
       <Filtros
@@ -31,11 +29,6 @@ export default function MuralDeVagas({ vagas }: { vagas: Vaga[] }) {
         aoMudarArea={setArea}
         areas={areas}
       />
-
-      <p className="numeros">
-        <strong>{visiveis.length}</strong> de {vagas.length} vagas ·{" "}
-        <strong>{aceitamIniciante}</strong> aceitam quem está começando
-      </p>
 
       {visiveis.length === 0 ? (
         <div className="aviso" style={{ marginTop: "16px" }}>
